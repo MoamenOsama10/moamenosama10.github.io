@@ -33,7 +33,7 @@
     --indigo:#7a4a24;
   }
   [data-theme="light"] .bg-anim span{opacity:0.10;}
-  [data-theme="light"] .bg-net span{opacity:0.18;color:#4a2f14 !important;}
+  [data-theme="light"] .bg-net span{opacity:0.18;color:#0e1116 !important;}
   [data-theme="light"] .hero-photo img{filter:none;}
   [data-theme="light"] .code-card .cc-dot.r{background:#e05a4e;}
   [data-theme="light"] .code-card .cc-dot.y{background:#e0a83e;}
@@ -897,9 +897,38 @@ function toggleTheme(){
     countEl.innerHTML = pct + '<span class="pl-percent">%</span>';
   }
 
+  function speakWelcome(){
+    if(!('speechSynthesis' in window)) return;
+    var msg = new SpeechSynthesisUtterance("Welcome to Moamen's Portfolio");
+    msg.lang = 'en-US';
+    msg.rate = 0.95;
+    msg.pitch = 0.85;
+
+    function pickMaleVoice(){
+      var voices = window.speechSynthesis.getVoices();
+      if(!voices.length) return;
+      var preferredNames = ['Google UK English Male','Microsoft David','Microsoft Guy','Daniel','Alex','Fred','Male'];
+      var voice = voices.find(function(v){
+        return v.lang.indexOf('en') === 0 && preferredNames.some(function(n){ return v.name.indexOf(n) !== -1; });
+      });
+      if(!voice){
+        voice = voices.find(function(v){ return v.lang.indexOf('en') === 0; });
+      }
+      if(voice) msg.voice = voice;
+      window.speechSynthesis.speak(msg);
+    }
+
+    if(window.speechSynthesis.getVoices().length){
+      pickMaleVoice();
+    } else {
+      window.speechSynthesis.onvoiceschanged = pickMaleVoice;
+    }
+  }
+
   function finishLoading(){
     preloader.classList.add('pl-hide');
     body.classList.remove('is-loading');
+    speakWelcome();
     setTimeout(function(){ preloader.remove(); }, 650);
   }
 
