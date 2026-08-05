@@ -2,8 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#07090c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Moamen">
 <title>Moamen Osama — Backend .NET Developer</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='35' fill='%2307090c'/><text x='90' y='125' font-family='Space Grotesk, Arial' font-weight='700' font-size='80' fill='%23f0a868' text-anchor='middle'>M</text></svg>">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307090c'/%3E%3Ctext x='32' y='44' font-family='Space Grotesk, Arial, sans-serif' font-weight='700' font-size='34' fill='%23f0a868' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,6 +138,10 @@
 
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;zoom:1.15;}
+  @media (max-width:768px){
+    html{zoom:1;}
+    body{height:100vh;height:100dvh;overflow-x:hidden;}
+  }
   body{
     background:var(--bg);
     color:var(--text);
@@ -138,7 +149,15 @@
     line-height:1.6;
     overflow-x:hidden;
   }
-  body.is-loading{overflow:hidden;height:100vh;}
+  body.is-loading{overflow:hidden;height:100vh;height:100dvh;}
+  @supports (padding: max(0px)) {
+    body {
+      padding-left: max(0px, env(safe-area-inset-left));
+      padding-right: max(0px, env(safe-area-inset-right));
+      padding-top: max(0px, env(safe-area-inset-top));
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
+    }
+  }
 
   /* ---------- PRELOADER ---------- */
   #preloader{
@@ -1269,6 +1288,43 @@ applyAccent('redblack');
     if(window.refreshCellColors) window.refreshCellColors();
     if(window.refreshParticleColors) window.refreshParticleColors();
   };
+</script>
+
+<script>
+  // Mobile PWA & Fullscreen Enhancement
+  (function(){
+    // Register service worker for offline support
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('data:text/javascript,%20self.addEventListener(%27install%27,%20e%20%3D%3E%20e.waitUntil(self.skipWaiting()))%3Bself.addEventListener(%27activate%27,%20e%20%3D%3E%20e.waitUntil(self.clients.claim()))%3B', {scope: '/'}).catch(err => console.log('SW registration optional:', err));
+    }
+    
+    // Prevent zoom on double-tap for better mobile UX
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', e => {
+      let now = Date.now();
+      if(now - lastTouchEnd <= 300){
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+    
+    // Handle iOS fullscreen on scroll
+    if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
+      let scrollTimeout;
+      window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        document.body.style.position = 'fixed';
+        scrollTimeout = setTimeout(() => {
+          document.body.style.position = '';
+        }, 100);
+      });
+    }
+    
+    // Set viewport-fit for notch phones
+    if(navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches){
+      document.documentElement.style.viewportFit = 'cover';
+    }
+  })();
 </script>
 
 </body>
