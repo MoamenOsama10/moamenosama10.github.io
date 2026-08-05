@@ -1,0 +1,34 @@
+{
+  "name": "Moamen Osama — Backend .NET Developer",
+  "short_name": "Moamen",
+  "description": "Backend-focused .NET developer with 4+ years of experience and 50+ projects",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07090c",
+  "theme_color": "#07090c",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='35' fill='%2307090c'/><text x='96' y='132' font-family='Space Grotesk, Arial' font-weight='700' font-size='90' fill='%23f0a868' text-anchor='middle'>M</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%2307090c'/><text x='256' y='360' font-family='Space Grotesk, Arial' font-weight='700' font-size='240' fill='%23f0a868' text-anchor='middle'>M</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "development"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect width='540' height='720' fill='%2307090c'/><text x='270' y='360' font-family='Space Grotesk' font-weight='700' font-size='80' fill='%23f0a868' text-anchor='middle'>Moamen Osama</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ]
+}
